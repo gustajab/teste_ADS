@@ -52,3 +52,22 @@ public class Turma {
     }
 }
 
+public List<Aluno> getAlunos() {
+    return alunos;
+}
+
+public String getCodigo() {
+    return codigo;
+}
+
+public String getEtapaEnsino() {
+    return etapaEnsino;
+}
+
+public int getAno() {
+    return ano;
+}
+
+public int getLimiteVagas() {
+    return limiteVagas;
+}
