@@ -1,5 +1,3 @@
-
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,7 +12,7 @@ public class Turma {
     private int ano;
     private int limiteVagas;
     private List<Aluno> alunos;
-    
+
     /**
      * Construtor que inicializa uma nova turma.
      * 
@@ -66,7 +64,7 @@ public class Turma {
                 return false;
         }
     }
-    
+
     /**
      * Retorna a lista de alunos matriculados na turma.
      * 
@@ -111,7 +109,7 @@ public class Turma {
     public int getLimiteVagas() {
         return limiteVagas;
     }
-    
+
     /**
      * Sobrescreve o método toString para fornecer uma representação textual da turma.
      * 
