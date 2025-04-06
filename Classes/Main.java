@@ -1,5 +1,5 @@
-import java.util.Scanner;
 import java.util.List;
+import java.util.Scanner;
 
 /**
  * Classe principal que contém o método main e implementa a interface com o usuário.
@@ -17,6 +17,7 @@ public class Main {
         // Criando instâncias das turmas disponíveis no sistema
         Turma turmaInfantil = new Turma("INF01", "infantil", 2023, 20);
         Turma turmaFundamental = new Turma("FUN01", "fundamental anos iniciais", 2023, 30);
+        Turma turmaFundamenta2 = new Turma("FUN02", "fundamental anos finais", 2023, 32);
         Turma turmaMedia = new Turma("MED01", "médio", 2023, 35);
 
         int opcao = 0;
@@ -36,13 +37,13 @@ public class Main {
             // Processamento da opção escolhida
             switch (opcao) {
                 case 1:
-                    cadastrarAluno(scanner, turmaInfantil, turmaFundamental, turmaMedia);
+                    cadastrarAluno(scanner, turmaInfantil, turmaFundamental, turmaFundamenta2, turmaMedia);
                     break;
                 case 2:
-                    listarAlunosPorTurma(scanner, turmaInfantil, turmaFundamental, turmaMedia);
+                    listarAlunosPorTurma(scanner, turmaInfantil, turmaFundamental, turmaFundamenta2, turmaMedia);
                     break;
                 case 3:
-                    mostrarInfoTurmas(turmaInfantil, turmaFundamental, turmaMedia);
+                    mostrarInfoTurmas(turmaInfantil, turmaFundamental, turmaFundamenta2, turmaMedia);
                     break;
                 case 4:
                     System.out.println("Saindo do sistema...");
@@ -62,9 +63,10 @@ public class Main {
      * @param scanner Scanner para leitura de entrada do usuário
      * @param turmaInfantil Referência para a turma infantil
      * @param turmaFundamental Referência para a turma fundamental
+     * @param turmaFundamenta2 Referência para a turma fundamental anos finais
      * @param turmaMedia Referência para a turma média
      */
-    private static void cadastrarAluno(Scanner scanner, Turma turmaInfantil, Turma turmaFundamental, Turma turmaMedia) {
+    private static void cadastrarAluno(Scanner scanner, Turma turmaInfantil, Turma turmaFundamental, Turma turmaFundamenta2, Turma turmaMedia) {
         System.out.println("\n=== Cadastro de Aluno ===");
 
         // Coleta os dados do aluno
@@ -88,7 +90,8 @@ public class Main {
         System.out.println("\nSelecione a turma:");
         System.out.println("1. Infantil");
         System.out.println("2. Fundamental Anos Iniciais");
-        System.out.println("3. Médio");
+        System.out.println("3. Fundamental Anos Finais");
+        System.out.println("4. Médio");
         System.out.print("Opção: ");
 
         int opcaoTurma = scanner.nextInt();
@@ -105,6 +108,9 @@ public class Main {
                 adicionado = turmaFundamental.adicionarAluno(aluno);
                 break;
             case 3:
+                adicionado = turmaFundamenta2.adicionarAluno(aluno);
+                break;
+            case 4:
                 adicionado = turmaMedia.adicionarAluno(aluno);
                 break;
             default:
@@ -126,13 +132,15 @@ public class Main {
      * @param scanner Scanner para leitura de entrada do usuário
      * @param turmaInfantil Referência para a turma infantil
      * @param turmaFundamental Referência para a turma fundamental
+     * @param turmaFundamenta2 Referência para a turma fundamental anos finais
      * @param turmaMedia Referência para a turma média
      */
-    private static void listarAlunosPorTurma(Scanner scanner, Turma turmaInfantil, Turma turmaFundamental, Turma turmaMedia) {
+    private static void listarAlunosPorTurma(Scanner scanner, Turma turmaInfantil, Turma turmaFundamental, Turma turmaFundamenta2, Turma turmaMedia) {
         System.out.println("\n=== Listar Alunos por Turma ===");
         System.out.println("1. Infantil");
         System.out.println("2. Fundamental Anos Iniciais");
-        System.out.println("3. Médio");
+        System.out.println("3. Fundamental Anos Finais");
+        System.out.println("4. Médio");
         System.out.print("Escolha a turma: ");
 
         int opcaoTurma = scanner.nextInt();
@@ -152,6 +160,10 @@ public class Main {
                 nomeTurma = "Fundamental Anos Iniciais";
                 break;
             case 3:
+                alunos = turmaFundamenta2.getAlunos();
+                nomeTurma = "Fundamental Anos Finais";
+                break;
+            case 4:
                 alunos = turmaMedia.getAlunos();
                 nomeTurma = "Médio";
                 break;
@@ -177,12 +189,14 @@ public class Main {
      * 
      * @param turmaInfantil Referência para a turma infantil
      * @param turmaFundamental Referência para a turma fundamental
+     * @param turmaFundamenta2 Referência para a turma fundamental anos finais
      * @param turmaMedia Referência para a turma média
      */
-    private static void mostrarInfoTurmas(Turma turmaInfantil, Turma turmaFundamental, Turma turmaMedia) {
+    private static void mostrarInfoTurmas(Turma turmaInfantil, Turma turmaFundamental, Turma turmaFundamenta2, Turma turmaMedia) {
         System.out.println("\n=== Informações das Turmas ===");
         System.out.println("Turma Infantil: " + turmaInfantil);
         System.out.println("Turma Fundamental: " + turmaFundamental);
+        System.out.println("Turma Fundamental Anos Finais: " + turmaFundamenta2);
         System.out.println("Turma Médio: " + turmaMedia);
     }
 }
