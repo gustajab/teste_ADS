@@ -23,12 +23,13 @@ public class Main {
         int opcao = 0;
 
         // Loop principal do menu
-        while (opcao != 4) {
+        while (opcao != 5) {
             System.out.println("\n===== SISTEMA ESCOLAR =====");
             System.out.println("1. Cadastrar Aluno");
             System.out.println("2. Listar Alunos por Turma");
             System.out.println("3. Informações das Turmas");
-            System.out.println("4. Sair");
+            System.out.println("4. Buscar Aluno por CPF");
+            System.out.println("5. Sair");
             System.out.print("Escolha uma opção: ");
 
             opcao = scanner.nextInt();
@@ -46,6 +47,9 @@ public class Main {
                     mostrarInfoTurmas(turmaInfantil, turmaFundamental, turmaFundamenta2, turmaMedia);
                     break;
                 case 4:
+                    buscarAlunoPorCPF(scanner, turmaInfantil, turmaFundamental, turmaFundamenta2, turmaMedia);
+                    break;
+                case 5:
                     System.out.println("Saindo do sistema...");
                     break;
                 default:
@@ -59,12 +63,6 @@ public class Main {
     /**
      * Método para cadastrar um novo aluno em uma turma.
      * Solicita os dados do aluno e verifica se ele pode ser adicionado à turma escolhida.
-     * 
-     * @param scanner Scanner para leitura de entrada do usuário
-     * @param turmaInfantil Referência para a turma infantil
-     * @param turmaFundamental Referência para a turma fundamental
-     * @param turmaFundamenta2 Referência para a turma fundamental anos finais
-     * @param turmaMedia Referência para a turma média
      */
     private static void cadastrarAluno(Scanner scanner, Turma turmaInfantil, Turma turmaFundamental, Turma turmaFundamenta2, Turma turmaMedia) {
         System.out.println("\n=== Cadastro de Aluno ===");
@@ -122,18 +120,12 @@ public class Main {
         if (adicionado) {
             System.out.println("Aluno cadastrado com sucesso!");
         } else {
-            System.out.println("Não foi possível cadastrar o aluno. Verifique a idade ou limite de vagas.");
+            System.out.println("Não foi possível cadastrar o aluno. Verifique a idade, limite de vagas ou se já está cadastrado.");
         }
     }
 
     /**
      * Método para listar todos os alunos de uma turma específica.
-     * 
-     * @param scanner Scanner para leitura de entrada do usuário
-     * @param turmaInfantil Referência para a turma infantil
-     * @param turmaFundamental Referência para a turma fundamental
-     * @param turmaFundamenta2 Referência para a turma fundamental anos finais
-     * @param turmaMedia Referência para a turma média
      */
     private static void listarAlunosPorTurma(Scanner scanner, Turma turmaInfantil, Turma turmaFundamental, Turma turmaFundamenta2, Turma turmaMedia) {
         System.out.println("\n=== Listar Alunos por Turma ===");
@@ -172,7 +164,7 @@ public class Main {
                 return;
         }
 
-        System.out.println("\nAlunos da Turma " + nomeTurma + ":");
+         System.out.println("\nAlunos da Turma " + nomeTurma + ":");
 
         // Verifica se há alunos na turma e os lista
         if (alunos.isEmpty()) {
@@ -186,11 +178,6 @@ public class Main {
 
     /**
      * Método para mostrar informações resumidas de todas as turmas.
-     * 
-     * @param turmaInfantil Referência para a turma infantil
-     * @param turmaFundamental Referência para a turma fundamental
-     * @param turmaFundamenta2 Referência para a turma fundamental anos finais
-     * @param turmaMedia Referência para a turma média
      */
     private static void mostrarInfoTurmas(Turma turmaInfantil, Turma turmaFundamental, Turma turmaFundamenta2, Turma turmaMedia) {
         System.out.println("\n=== Informações das Turmas ===");
@@ -198,5 +185,73 @@ public class Main {
         System.out.println("Turma Fundamental: " + turmaFundamental);
         System.out.println("Turma Fundamental Anos Finais: " + turmaFundamenta2);
         System.out.println("Turma Médio: " + turmaMedia);
+    }
+    
+    /**
+     * Método para buscar um aluno pelo CPF em todas as turmas.
+     * Utiliza o método equals sobrescrito para comparar alunos.
+     */
+    private static void buscarAlunoPorCPF(Scanner scanner, Turma turmaInfantil, Turma turmaFundamental, 
+                                         Turma turmaFundamenta2, Turma turmaMedia) {
+        System.out.println("\n=== Buscar Aluno por CPF ===");
+        System.out.print("Digite o CPF do aluno: ");
+        String cpf = scanner.nextLine();
+        
+        // Cria um aluno temporário apenas com o CPF para usar na comparação
+        Aluno alunoBusca = new Aluno("", cpf, "", 0);
+        
+        // Busca o aluno em cada turma
+        Aluno alunoEncontrado = null;
+        String nomeTurma = "";
+        
+        // Verifica na turma infantil
+        for (Aluno aluno : turmaInfantil.getAlunos()) {
+            if (aluno.equals(alunoBusca)) {
+                alunoEncontrado = aluno;
+                nomeTurma = "Infantil";
+                break;
+            }
+        }
+        
+        // Verifica na turma fundamental anos iniciais
+        if (alunoEncontrado == null) {
+            for (Aluno aluno : turmaFundamental.getAlunos()) {
+                if (aluno.equals(alunoBusca)) {
+                    alunoEncontrado = aluno;
+                    nomeTurma = "Fundamental Anos Iniciais";
+                    break;
+                }
+            }
+        }
+        
+        // Verifica na turma fundamental anos finais
+        if (alunoEncontrado == null) {
+            for (Aluno aluno : turmaFundamenta2.getAlunos()) {
+                if (aluno.equals(alunoBusca)) {
+                    alunoEncontrado = aluno;
+                    nomeTurma = "Fundamental Anos Finais";
+                    break;
+                }
+            }
+        }
+        
+        // Verifica na turma média
+        if (alunoEncontrado == null) {
+            for (Aluno aluno : turmaMedia.getAlunos()) {
+                if (aluno.equals(alunoBusca)) {
+                    alunoEncontrado = aluno;
+                    nomeTurma = "Médio";
+                    break;
+                }
+            }
+        }
+        
+        // Exibe o resultado da busca
+        if (alunoEncontrado != null) {
+            System.out.println("\nAluno encontrado na turma " + nomeTurma + ":");
+            System.out.println(alunoEncontrado);
+        } else {
+            System.out.println("\nAluno com CPF " + cpf + " não encontrado em nenhuma turma.");
+        }
     }
 }

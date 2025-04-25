@@ -36,6 +36,11 @@ public class Turma {
      * @return true se o aluno foi adicionado com sucesso, false caso contrário
      */
     public boolean adicionarAluno(Aluno aluno) {
+        // Verifica se o aluno já está na turma
+        if (alunos.contains(aluno)) {
+            return false; // Aluno já está matriculado
+        }
+        
         // Verifica se há vagas disponíveis e se a idade é adequada para a etapa de ensino
         if (alunos.size() < limiteVagas && validarIdade(aluno.getIdade())) {
             alunos.add(aluno);
@@ -119,5 +124,28 @@ public class Turma {
     public String toString() {
         return "Código: " + codigo + ", Etapa: " + etapaEnsino + ", Ano: " + ano + 
                ", Vagas: " + alunos.size() + "/" + limiteVagas;
+    }
+    
+    /**
+     * Sobrescreve o método equals para comparar turmas pelo código.
+     * Duas turmas são consideradas iguais se possuem o mesmo código.
+     */
+    @Override
+    public boolean equals(Object obj) {
+        // Verifica se é o mesmo objeto
+        if (this == obj) {
+            return true;
+        }
+        
+        // Verifica se o objeto é nulo ou de classe diferente
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+        
+        // Converte o objeto para Turma
+        Turma outraTurma = (Turma) obj;
+        
+        // Compara pelo código (identificador único)
+        return this.codigo != null && this.codigo.equals(outraTurma.codigo);
     }
 }

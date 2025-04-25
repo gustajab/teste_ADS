@@ -1,4 +1,3 @@
-
 public class Aluno {
     // Atributos privados para garantir o encapsulamento
     private String nome;
@@ -51,34 +50,27 @@ public class Aluno {
     public String toString() {
         return "Nome: " + nome + ", CPF: " + cpf + ", Endereço: " + endereco + ", Idade: " + idade;
     }
-}
-
-// Se você quiser manter a classe ListaDeAlunos, ela deve ser definida como uma classe separada
-class ListaDeAlunos {
-    private class No {
-        Aluno aluno;
-        No proximo;
-        
-        public No(Aluno aluno) {
-            this.aluno = aluno;
-            this.proximo = null;
+    
+    /**
+     * Sobrescreve o método equals para comparar alunos pelo CPF.
+     * Dois alunos são considerados iguais se possuem o mesmo CPF.
+     */
+    @Override
+    public boolean equals(Object obj) {
+        // Verifica se é o mesmo objeto
+        if (this == obj) {
+            return true;
         }
-    }
-    
-    private No primeiro;
-    private No ultimo;
-    private int tamanho;
-    
-    public ListaDeAlunos() {
-        this.primeiro = null;
-        this.ultimo = null;
-        this.tamanho = 0;
-    }
-    
-    // Adicione aqui os métodos da classe ListaDeAlunos
-    
-    public Aluno get(int index) {
-        // Implementação do método get
-        return null; // Substitua por sua implementação real
+        
+        // Verifica se o objeto é nulo ou de classe diferente
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+        
+        // Converte o objeto para Aluno
+        Aluno outroAluno = (Aluno) obj;
+        
+        // Compara pelo CPF (identificador único)
+        return this.cpf != null && this.cpf.equals(outroAluno.cpf);
     }
 }
