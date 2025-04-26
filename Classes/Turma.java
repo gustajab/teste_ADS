@@ -1,6 +1,5 @@
 import java.util.ArrayList;
 import java.util.List;
-
 /**
  * Classe que representa uma turma escolar.
  * Gerencia informações sobre a turma e a lista de alunos matriculados.
@@ -11,7 +10,7 @@ public class Turma {
     private String etapaEnsino;
     private int ano;
     private int limiteVagas;
-    private List<Aluno> alunos;
+    private ListaDeAlunos alunos;
 
     /**
      * Construtor que inicializa uma nova turma.
@@ -26,7 +25,7 @@ public class Turma {
         this.etapaEnsino = etapaEnsino;
         this.ano = ano;
         this.limiteVagas = limiteVagas;
-        this.alunos = new ArrayList<>(); // Inicializa a lista vazia de alunos
+        this.alunos = new ListaDeAlunos(); // Inicializa a lista vazia de alunos
     }
 
     /**
@@ -36,15 +35,15 @@ public class Turma {
      * @return true se o aluno foi adicionado com sucesso, false caso contrário
      */
     public boolean adicionarAluno(Aluno aluno) {
-        // Verifica se o aluno já está na turma
-        if (alunos.contains(aluno)) {
-            return false; // Aluno já está matriculado
-        }
-        
         // Verifica se há vagas disponíveis e se a idade é adequada para a etapa de ensino
-        if (alunos.size() < limiteVagas && validarIdade(aluno.getIdade())) {
-            alunos.add(aluno);
-            return true;
+        if (alunos.getTamanho() < limiteVagas && validarIdade(aluno.getIdade())) {
+            try {
+                alunos.adicionar(aluno);
+                return true;
+            } catch (ExcecaoDeAlunoJaExistente e) {
+                System.out.println("Erro ao adicionar aluno: " + e.getMessage());
+                return false;
+            }
         }
         return false;
     }
@@ -76,7 +75,11 @@ public class Turma {
      * @return Lista de objetos Aluno
      */
     public List<Aluno> getAlunos() {
-        return alunos;
+        List<Aluno> listaAlunos = new ArrayList<>();
+        for (int i = 0; i < alunos.getTamanho(); i++) {
+            listaAlunos.add(alunos.get(i));
+        }
+        return listaAlunos;
     }
 
     /**
@@ -123,7 +126,7 @@ public class Turma {
     @Override
     public String toString() {
         return "Código: " + codigo + ", Etapa: " + etapaEnsino + ", Ano: " + ano + 
-               ", Vagas: " + alunos.size() + "/" + limiteVagas;
+               ", Vagas: " + alunos.getTamanho() + "/" + limiteVagas;
     }
     
     /**

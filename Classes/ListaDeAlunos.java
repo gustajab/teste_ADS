@@ -30,8 +30,14 @@ public class ListaDeAlunos {
      * Adiciona um aluno ao final da lista.
      * 
      * @param aluno Aluno a ser adicionado
+     * @throws ExcecaoDeAlunoJaExistente Se o aluno já existe na lista
      */
-    public void adicionar(Aluno aluno) {
+    public void adicionar(Aluno aluno) throws ExcecaoDeAlunoJaExistente {
+        // Verifica se o aluno já existe na lista
+        if (contem(aluno)) {
+            throw new ExcecaoDeAlunoJaExistente("Aluno com CPF " + aluno.getCpf() + " já existe na lista!");
+        }
+        
         No novoNo = new No(aluno);
         
         if (primeiro == null) {
